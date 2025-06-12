@@ -17,6 +17,22 @@ class TelemetryProcessor:
     
     def __init__(self, storage_callback=None):
         self.storage_callback = storage_callback
+        self._running = False
+    
+    async def start(self):
+        """Start the telemetry processor."""
+        self._running = True
+        logger.info("Telemetry processor started")
+    
+    async def stop(self):
+        """Stop the telemetry processor."""
+        self._running = False
+        logger.info("Telemetry processor stopped")
+    
+    @property
+    def is_running(self) -> bool:
+        """Check if processor is running."""
+        return self._running
     
     @handle_telemetry_error
     def process_metrics(self, request: ExportMetricsServiceRequest):
